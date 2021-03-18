@@ -71,8 +71,6 @@ peerSocket.addEventListener("open", (evt) => {
 
 peerSocket.addEventListener("message", (evt) => {
   if (evt && evt.data && evt.data.key === "apikey") {
-    console.log("evt.data.value");
-    console.log(evt.data.value);
     fetchSalesData();
   }
 });
