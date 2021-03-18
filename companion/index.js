@@ -11,7 +11,13 @@ let API_KEY = "apiKey";
 // Create the api object
 // this is always needed to answer the device's requests
 let kpayMerchantApi = new KpayMerchantApi();
-kpayMerchantApi.setApiKey('');
+
+
+if(settingsStorage.getItem("savedKey") != "" && settingsStorage.getItem("savedKey")!= null) {
+  kpayMerchantApi.setApiKey(settingsStorage.getItem("savedKey"));
+} else {
+  kpayMerchantApi.setApiKey('');
+}
 
 
 // You can also fetch the sales data from the companion directly 
@@ -23,6 +29,7 @@ settingsStorage.addEventListener("change", (evt) => {
   if(evt.key == "apikey"){
     let data = JSON.parse(evt.newValue);
     let apikey = data.name;
+    settingsStorage.setItem("savedKey", apikey);
     kpayMerchantApi.setApiKey(apikey);
   } 
   
