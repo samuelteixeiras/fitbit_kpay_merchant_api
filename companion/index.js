@@ -17,9 +17,6 @@ kpayMerchantApi.setApiKey('');
 // You can also fetch the sales data from the companion directly 
 // The api is the same as the device's one
 
-// set the maximum age of the data
-kpayMerchantApi.setMaximumAge(0); 
-
 
 // Settings have been changed
 settingsStorage.addEventListener("change", (evt) => {
