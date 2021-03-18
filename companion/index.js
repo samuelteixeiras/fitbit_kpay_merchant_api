@@ -2,44 +2,54 @@
 import KpayMerchantApi from '../common/kpay_merchant_api/phone';
 import { SUMMARY, TODAY, YESTERDAY } from '../common/kpay_merchant_api/common';
 
+import { settingsStorage } from "settings";
+import * as messaging from "messaging";
+import { me as companion } from "companion";
+
+let API_KEY = "apiKey";
+
 // Create the api object
 // this is always needed to answer the device's requests
 let kpayMerchantApi = new KpayMerchantApi();
-kpayMerchantApi.setApiKey('0123456789abcdef0123456789abcdef');
+kpayMerchantApi.setApiKey('');
 
 
 // You can also fetch the sales data from the companion directly 
 // The api is the same as the device's one
-/*
+
 // set the maximum age of the data
-kpayMerchantApi.setMaximumAge(15 * 60 * 1000); 
+kpayMerchantApi.setMaximumAge(0); 
 
-// Display the sales data received from the companion
-kpayMerchantApi.onsuccess = (type, data) => {
-  let receivedData = undefined;
-  if (type == SUMMARY) {
-    receivedData = data[SUMMARY];
-  }
-  if (type == TODAY) {
-    receivedData = data[TODAY];
-  }
-  if (type == YESTERDAY) {
-    receivedData = data[YESTERDAY];
-  }
+
+// Settings have been changed
+settingsStorage.addEventListener("change", (evt) => {
+  if(evt.key == "apikey"){
+    let data = JSON.parse(evt.newValue);
+    let apikey = data.name;
+    kpayMerchantApi.setApiKey(apikey);
+  } 
   
-  if (receivedData) {
-    console.log(type + ' data: ' + JSON.stringify(receivedData));
+  sendValue(evt.key, evt.newValue);
+});
+
+if (companion.launchReasons.settingsChanged) {
+  // Send the value of the setting
+  sendValue(API_KEY, settingsStorage.getItem(API_KEY));
+}
+
+function sendValue(key, val) {
+  if (val) {
+    sendSettingData({
+      key: key,
+      value: JSON.parse(val)
+    });
   }
 }
-
-kpayMerchantApi.onerror = (error) => {
-  console.log("KPay Merchant API error: " + error);
+function sendSettingData(data) {
+  // If we have a MessageSocket, send the data to the device
+  if (messaging.peerSocket.readyState === messaging.peerSocket.OPEN) {
+    messaging.peerSocket.send(data);
+  } else {
+    console.log("No peerSocket connection");
+  }
 }
-
-kpayMerchantApi.fetchSummary();
-kpayMerchantApi.fetchToday();
-kpayMerchantApi.fetchYesterday();
-kpayMerchantApi.fetchMultiple([SUMMARY, TODAY, YESTERDAY]);
-*/
-
-

@@ -4,25 +4,31 @@ import { peerSocket } from "messaging";
 // Import the api module
 import KpayMerchantApi from '../common/kpay_merchant_api/device';
 import { SUMMARY, TODAY, YESTERDAY } from '../common/kpay_merchant_api/common';
-
 // Create the api object
 let kpayMerchantApi = new KpayMerchantApi();
+
 
 let showSalesData = function(type, data){
   let receivedData = undefined;
   if (type == SUMMARY) {
     receivedData = data[SUMMARY];
     
-    document.getElementById("totalPurchases").text = receivedData.totalPurchases + " purchases";
+    document.getElementById("totalPurchases").text = receivedData.totalPurchases;
     document.getElementById("totalAmount").text = '$' + receivedData.totalIncome + ' USD';
     document.getElementById("nextPayDate").text = receivedData.nextPayout.date;
-    document.getElementById("nextPayAmount").text = receivedData.nextPayout.amount;
+    document.getElementById("nextPayAmount").text = '$' + receivedData.nextPayout.amount + ' USD';
   }
   if (type == TODAY) {
     receivedData = data[TODAY];
+    document.getElementById("todayPurchases").text = receivedData.purchases;
+    document.getElementById("todayAmount").text = '$' + receivedData.amount + ' USD';
+    document.getElementById("rank").text = receivedData.rank;
   }
   if (type == YESTERDAY) {
     receivedData = data[YESTERDAY];
+    document.getElementById("yesterdayPurchases").text = receivedData.purchases;
+    document.getElementById("yesterdayAmount").text = '$' + receivedData.amount + ' USD';
+    document.getElementById("yesterdayRank").text = receivedData.rank;
   }
   
   if (receivedData) {
@@ -45,12 +51,12 @@ let fetchSalesData = function() {
   document.getElementById("nextPayAmount").text = "Fetching...";
   
   //either fetch only one specific data type you want
-  kpayMerchantApi.fetchSummary();
-  //kpayMerchantApi.fetchToday();
+  //kpayMerchantApi.fetchSummary();
+  ///kpayMerchantApi.fetchToday();
   //kpayMerchantApi.fetchYesterday();
   
   //OR fetch all the data you want at once
-  //kpayMerchantApi.fetchMultiple([SUMMARY, TODAY, YESTERDAY]);
+  kpayMerchantApi.fetchMultiple([SUMMARY, TODAY, YESTERDAY]);
 }
 
 if (peerSocket.readyState === peerSocket.OPEN) {
@@ -61,4 +67,12 @@ if (peerSocket.readyState === peerSocket.OPEN) {
 // Listen for the onopen event (will only be called if connection isn't open already)
 peerSocket.addEventListener("open", (evt) => {
   fetchSalesData();
+});
+
+peerSocket.addEventListener("message", (evt) => {
+  if (evt && evt.data && evt.data.key === "apikey") {
+    console.log("evt.data.value");
+    console.log(evt.data.value);
+    fetchSalesData();
+  }
 });

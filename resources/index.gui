@@ -1,6 +1,23 @@
 <svg viewport-fill="black">
-  <text id="totalPurchases" x="10" y="30"/>
-  <text id="totalAmount" x="10" y="80"/>
-  <text id="nextPayDate" x="10" y="130"/>
-  <text id="nextPayAmount" x="10" y="180"/>
+  <svg id="container">
+    <rect id="background" class="application-fill" />
+    <use id="statsCyle" href="#cycleview">
+      <use href="#cycleview-item" class="cycle-item">
+        <text x="40%" y="30">Today</text>
+         <text x="10" y="70">Purchases: </text><text id="todayPurchases" x="190" y="70"/>
+        <text x="10" y="110">Amount: </text><text id="todayAmount" x="190" y="110"/>
+        <text x="10" y="150">Rank</text><text id="rank" x="190" y="150"/>
+        <text x="35%" y="180">Yesterday</text>
+         <text x="10" y="210">Purchases: </text><text id="yesterdayPurchases" x="190" y="210"/>
+        <text x="10" y="250">Amount: </text><text id="yesterdayAmount" x="190" y="250"/>
+        <text x="10" y="290">Rank</text><text id="yesterdayRank" x="190" y="290"/>
+      </use>
+       <use href="#cycleview-item" class="cycle-item">
+        <text x="10" y="30">Total Purchases: </text><text id="totalPurchases" x="170" y="30"/>
+        <text x="10" y="80">Total Amount: </text><text id="totalAmount" x="170" y="80"/>
+        <text x="10" y="180">Next Pay Amount</text><text id="nextPayAmount" x="190" y="180"/>
+        <text x="10" y="230">Next Pay date</text><text id="nextPayDate" x="170" y="230"/>
+      </use>
+    </use>
+  </svg>
 </svg>

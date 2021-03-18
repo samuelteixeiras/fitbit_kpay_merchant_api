@@ -1,28 +1,28 @@
 {
   "name": "kpay-merchant-api-demo",
-  "version": "0.1.0",
   "private": true,
   "license": "UNLICENSED",
   "devDependencies": {
-    "@fitbit/sdk": "~1.0.4",
+    "@fitbit/sdk": "^4.0.1",
     "@fitbit/sdk-cli": "^1.0.2"
   },
   "fitbit": {
-    "appUUID": "5be52844-3a67-4fb9-9525-9f5788e5624a",
+    "appUUID": "6f86c660-22df-44f8-bb4e-3f81a580f606",
     "appType": "app",
-    "appDisplayName": "KPay-Merchant-Api-Demo",
-    "iconFile": "resources/icon.png",
+    "appDisplayName": "KPay Merchant",
     "wipeColor": "#009688",
     "requestedPermissions": [
       "access_internet"
     ],
     "buildTargets": [
       "higgs",
-      "meson"
+      "meson",
+      "gemini",
+      "mira"
     ],
     "i18n": {
       "en": {
-        "name": "KPay-Merchant-Api-Demo"
+        "name": "KPay Merchant"
       }
     }
   },
