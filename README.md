@@ -1,4 +1,12 @@
-# K·pay merchant API module for Fitbit OS
+# K·pay merchant APP
+
+Use your api key in the settings to use this APP.
+
+Code to fitbit: https://gallery.fitbit.com/details/6f86c660-22df-44f8-bb4e-3f81a580f606
+
+Code Base
+
+## K·pay merchant API module for Fitbit OS
 
 Library to get the data available via the K·pay merchant API and use it in an app or clockface.
 
